@@ -1,9 +1,12 @@
 import LoggingForm from "./components/loggingForm.tsx";
 import RegistrationForm from "./components/registrationForm.tsx";
 import {useState} from "react";
+import LogginSuccess from "./components/logginSuccess.tsx";
 
 const App = () => {
     const [isLogging, setIsLogging] = useState(false)
+    const [loginSuccess, setLoginSuccess] = useState(false); // State to track login success
+
     // Function to handle form submission (replace this with your authentication logic)
     const handleLogin = async (email: string, password: string) => {
         try {
@@ -19,6 +22,7 @@ const App = () => {
             // Handle the response from the API
             if (response.ok) {
                 // Authentication successful
+                setLoginSuccess(true);
                 console.log('Authentication successful');
             } else {
                 // Authentication failed, handle error i.e display error message
@@ -77,6 +81,7 @@ const App = () => {
             </div>
 
             {isLogging ? <LoggingForm onSubmit={handleLogin}/> : <RegistrationForm onSubmit={handleRegistration}/>}
+            {loginSuccess && <LogginSuccess />}
         </div>
     );
 };
